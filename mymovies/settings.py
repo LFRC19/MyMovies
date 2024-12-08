@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,12 +31,14 @@ ALLOWED_HOSTS = ["107.20.52.125"]
 # Application definition
 
 INSTALLED_APPS = [
+    'movies.apps.MoviesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'mymovies.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'], #Ruta global a los templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,6 +70,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mymovies.wsgi.application'
+
+LOGIN_REDIRECT_URL = '/menu/'  # Página de menú
+LOGOUT_REDIRECT_URL = '/'  # Cambia esto a la página principal u otra página que prefieras
 
 
 # Database
@@ -115,7 +120,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'movies/static']  # Donde está la carpeta 'static' que incluye 'Recursos'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Para producción
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

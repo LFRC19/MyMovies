@@ -16,10 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from movies import views  # Importa tus vistas de la app movies
+from django.contrib.auth import views as auth_views
 
-from movies.views import index
+
+#from movies.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',index)
+    path('movie/', views.movie_view, name='movie'),
+    path('mediconnect/', views.mediconnect_view, name='mediconnect'),  # Ruta para mediconnect.html
+    path('registro/', views.registro_view, name='registro'),  # URL para el registro
+    path('login/', auth_views.LoginView.as_view(template_name='movies/login.html'), name='login'),
+    path('menu/', views.menu_view, name='menu'),  # Redirigir después del login
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # URL para cerrar sesión
 ]
